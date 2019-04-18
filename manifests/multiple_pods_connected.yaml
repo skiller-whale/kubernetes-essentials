@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: skillerwhale-svc-json
+  labels:
+    app: svc-json
+spec:
+  containers:
+    - name: skillerwhale-svc-json
+      image: skillerwhale/svc-json:v1
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+      env:
+        - name: ID
+          value: "foo-bar-id"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: skillerwhale-svc-json
+spec:
+  selector:
+    app: svc-json
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: skillerwhale-svc-html
+  labels:
+    app: svc-html
+spec:
+  containers:
+    - name: skillerwhale-svc-html
+      image: skillerwhale/svc-html:v1
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8080
+      env:
+        # NOTE: the DNS name is resolved by k8s DNS service
+        - name: REMOTE_URL
+          value: "http://skillerwhale-svc-json"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: skillerwhale-svc-html
+spec:
+  selector:
+    app: svc-html
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080

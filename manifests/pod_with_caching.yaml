@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: svc-json
+spec:
+  volumes:
+    - name: shared
+  containers:
+    - name: svc-json
+      image: skillerwhale/svc-json:with-cache
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: shared
+          mountPath: /shared-data
+      ports:
+        - containerPort: 80
+      env:
+        - name: CACHE_PATH
+          value: "/shared-data/cache"
+    - name: cache-warmer
+      image: skillerwhale/cache-warmer:latest
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: shared
+          mountPath: /shared-data
+      env:
+        - name: CACHE_PATH
+          value: "/shared-data/cache"

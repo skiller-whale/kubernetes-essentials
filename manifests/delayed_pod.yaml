@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: skillerwhale-svc-json
+spec:
+  containers:
+    - name: skillerwhale-svc-json
+      image: skillerwhale/svc-json:v1
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+      env:
+        - name: DELAY
+          value: 500

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svc-json
+spec:
+  selector:
+    matchLabels:
+      app: svc-json
+  template:
+    metadata:
+      labels:
+        app: svc-json
+    spec:
+      containers:
+        - name: svc-json
+          image: skillerwhale/svc-json:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

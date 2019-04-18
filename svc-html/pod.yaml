@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: skillerwhale-svc-html
+spec:
+  containers:
+    - name: skillerwhale-svc-html
+      image: skillerwhale/svc-html:v1
+      imagePullPolicy: Always
+       ports:
+        - containerPort: 8080
+       env:
+        - name: REMOTE_URL
+          value: "http://123.45.67.80"
